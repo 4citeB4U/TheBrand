@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Agent Lee Unified Workbench</title>
+
+  <!-- Begin inline styles from all modules -->
+  <style>
+    /* Global styles */
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #3498db;
+      --success-color: #2ecc71;
+      --warning-color: #f39c12;
+      --danger-color: #e74c3c;
+      --light-bg: #ecf0f1;
+      --dark-bg: #34495e;
+      --info-color: #3498db;
+      --debug-color: #9b59b6;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--light-bg);
+      color: #333;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header styles */
+    header {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    /* Panel styles */
+    .panel {
+      background: white;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 15px;
+      overflow: hidden;
+    }
+
+    .panel-header {
+      background: #f5f5f5;
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .panel-content {
+      padding: 15px;
+    }
+
+    /* Button styles */
+    button {
+      background: var(--secondary-color);
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 5px;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    .danger-btn {
+      background: var(--danger-color);
+    }
+
+    .warning-btn {
+      background: var(--warning-color);
+    }
+
+    .success-btn {
+      background: var(--success-color);
+    }
+
+    /* Status indicators */
+    .status-indicator {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 5px;
+    }
+
+    .status-active { background-color: var(--success-color); }
+    .status-busy { background-color: var(--warning-color); }
+    .status-error { background-color: var(--danger-color); }
+    .status-inactive { background-color: #95a5a6; }
+
+    /* Console/Log styles */
+    .console-line {
+      font-family: monospace;
+      margin: 2px 0;
+      padding: 3px 5px;
+    }
+
+    .console-time {
+      color: #7f8c8d;
+      margin-right: 5px;
+    }
+
+    .console-info { color: var(--info-color); }
+    .console-success { color: var(--success-color); }
+    .console-warning { color: var(--warning-color); }
+    .console-error { color: var(--danger-color); }
+    .console-debug { color: var(--debug-color); }
+
+    /* Navigation */
+    .nav-btn {
+      background: transparent;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .nav-btn:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .nav-btn.active {
+      background: rgba(255,255,255,0.2);
+      font-weight: bold;
+    }
+
+    /* Module containers */
+    .module-container {
+      display: none;
+      padding: 20px;
+      background: white;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin: 20px;
+      flex: 1;
+      overflow: auto;
+    }
+
+    .module-container.active {
+      display: block;
+    }
+
+    /* Main content area */
+    main {
+      flex: 1;
+      overflow: auto;
+      padding: 0 10px;
+    }
+
+    /* Voice panel specific styles */
+    #panel-voice {
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .mic-button {
+      background-color: var(--secondary-color);
+      color: white;
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .mic-button:hover {
+      background-color: #2980b9;
+    }
+
+    .mic-button.listening {
+      background-color: var(--danger-color);
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    /* Memory module styles */
+    .memory-stats {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .memory-controls {
+      margin-bottom: 20px;
+    }
+
+    .memory-group-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #f5f5f5;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 15px;
+      cursor: pointer;
+    }
+
+    .memory-group-content {
+      padding: 10px;
+      border: 1px solid #eee;
+      border-top: none;
+      border-radius: 0 0 5px 5px;
+      margin-bottom: 15px;
+    }
+
+    .memory-item {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      margin-bottom: 5px;
+    }
+
+    .memory-item:last-child {
+      border-bottom: none;
+    }
+
+    .memory-item-header {
+      font-weight: bold;
+      font-size: 1.1em;
+      margin-bottom: 5px;
+    }
+
+    .memory-item-category {
+      color: #3498db;
+      font-size: 0.9em;
+      margin-bottom: 5px;
+    }
+
+    .memory-item-description {
+      margin-bottom: 5px;
+    }
+
+    .memory-item-safe {
+      font-size: 0.9em;
+      color: #7f8c8d;
+    }
+
+    .toggle-btn {
+      background: none;
+      border: none;
+      color: #333;
+      cursor: pointer;
+      font-size: 1.2em;
+    }
+
+    /* Additional module-specific styles will be added as needed */
+  </style>
+</head>
+<body>
+
+<!-- 🎙️ Voice Control Panel -->
+<section id="panel-voice">
+  <div class="voice-status">
+    <span id="voice-status-indicator" class="status-indicator status-inactive"></span>
+    <span id="voice-status-text">Voice Ready</span>
+  </div>
+  <button type="button" id="mic-button" class="mic-button" title="Toggle voice recognition">
+    <i class="fas fa-microphone"></i>
+  </button>
+  <div id="voice-response">Waiting for voice command...</div>
+</section>
+
+<!-- Header with navigation -->
+<header>
+  <div class="system-title">
+    <h1>Agent Lee</h1>
+    <span id="system-status" class="status-badge">Initializing</span>
+  </div>
+  <div class="header-controls">
+    <button type="button" id="dashboard-btn" class="nav-btn active">Dashboard</button>
+    <button type="button" id="llm-btn" class="nav-btn">Brain</button>
+    <button type="button" id="worker-btn" class="nav-btn">Workers</button>
+    <button type="button" id="crm-btn" class="nav-btn">CRM</button>
+    <button type="button" id="logger-btn" class="nav-btn">Logger</button>
+    <button type="button" id="agent-btn" class="nav-btn">Agent</button>
+    <button type="button" id="memory-btn" class="nav-btn">Memory</button>
+  </div>
+</header>
+
+<main>
+  <!-- 📊 Dashboard -->
+  <section id="panel-dashboard" class="module-container active">
+    <h2>System Dashboard</h2>
+    <div class="dashboard-metrics">
+      <div class="metric-card">
+        <div id="agents-count" class="metric-value">0</div>
+        <div class="metric-label">Active Agents</div>
+      </div>
+      <div class="metric-card">
+        <div id="workers-count" class="metric-value">0</div>
+        <div class="metric-label">Active Workers</div>
+      </div>
+      <div class="metric-card">
+        <div id="tasks-count" class="metric-value">0</div>
+        <div class="metric-label">Pending Tasks</div>
+      </div>
+    </div>
+    <div class="system-health">
+      <h3>System Health</h3>
+      <div id="health-chart"></div>
+    </div>
+    <div class="recent-activity">
+      <h3>Recent Activity</h3>
+      <div id="activity-log"></div>
+    </div>
+  </section>
+
+  <!-- 🧠 LLM Brain -->
+  <section id="panel-llm" class="module-container">
+    <h2>LLM Brain Module</h2>
+    <div class="brain-interface">
+      <div id="thought-stream" class="thought-stream">
+        <div class="thought">Initializing LLM brain module...</div>
+        <div class="thought">Loading core knowledge database...</div>
+        <div class="thought">Establishing connections with agent and worker modules...</div>
+      </div>
+
+      <div class="agent-actions">
+        <h3>Agent Instructions</h3>
+        <ul id="action-list" class="action-list">
+          <!-- Agent instructions will appear here -->
+        </ul>
+      </div>
+
+      <div class="controls">
+        <button type="button" id="analyze-btn">Analyze System</button>
+        <button type="button" id="generate-btn">Generate Task</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 📦 Packages -->
+  <section id="panel-packages" class="module-container">
+    <h2>System Dependencies</h2>
+    <div class="packages-list">
+      <div class="package-item">
+        <h3>CryptoModule</h3>
+        <p>Secure encryption using Web Crypto API</p>
+      </div>
+      <div class="package-item">
+        <h3>WebRTCModule</h3>
+        <p>Peer communication capabilities</p>
+      </div>
+      <div class="package-item">
+        <h3>SecureMessaging</h3>
+        <p>End-to-end encrypted messaging</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⚙️ Workers -->
+  <section id="panel-worker" class="module-container">
+    <h2>Worker Module</h2>
+    <div id="worker-status-badge" class="status-badge">Ready</div>
+
+    <div class="worker-stats">
+      <h3>Worker Stats</h3>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div id="tasks-completed" class="stat-value">0</div>
+          <div class="stat-label">Tasks Completed</div>
+        </div>
+        <div class="stat-card">
+          <div id="tasks-pending" class="stat-value">0</div>
+          <div class="stat-label">Tasks Pending</div>
+        </div>
+        <div class="stat-card">
+          <div id="avg-process-time" class="stat-value">0ms</div>
+          <div class="stat-label">Avg. Process Time</div>
+        </div>
+        <div class="stat-card">
+          <div id="encryption-status" class="stat-value">Off</div>
+          <div class="stat-label">Encryption</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="task-list" id="task-list">
+      <!-- Tasks will be dynamically added here -->
+    </div>
+
+    <div class="worker-console" id="worker-console">
+      <div class="console-line"><span class="console-time">[00:00:00]</span> Worker module initialized.</div>
+    </div>
+
+    <div class="controls">
+      <button type="button" id="spawn-child-btn">Spawn Child Worker</button>
+      <button type="button" id="task-test-btn">Run Test Task</button>
+      <button type="button" id="toggle-encryption-btn">Toggle Encryption</button>
+      <button type="button" id="run-stress-test-btn">Run Stress Test</button>
+    </div>
+  </section>
+
+  <!-- 📒 CRM Panel -->
+  <section id="panel-crm" class="module-container">
+    <h2>CRM Module</h2>
+    <div class="crm-controls">
+      <button type="button" id="add-contact-btn" class="success-btn">Add Contact</button>
+      <button type="button" id="import-contacts-btn">Import Contacts</button>
+      <button type="button" id="export-contacts-btn">Export Contacts</button>
+    </div>
+
+    <div class="crm-content">
+      <div class="contacts-list" id="contacts-list">
+        <!-- Contacts will be listed here -->
+        <div class="empty-state">No contacts found. Add a contact to get started.</div>
+      </div>
+
+      <div class="contact-details" id="contact-details">
+        <!-- Selected contact details will appear here -->
+      </div>
+    </div>
+  </section>
+
+  <!-- 🧾 Logger -->
+  <section id="panel-logger" class="module-container">
+    <h2>CRM Logging Service</h2>
+
+    <div class="controls">
+      <button type="button" id="clear-logs-btn">Clear Logs</button>
+      <button type="button" id="export-logs-btn">Export Logs</button>
+      <button type="button" id="test-log-btn">Generate Test Log</button>
+    </div>
+
+    <div class="filters">
+      <span>Filter by level:</span>
+      <button type="button" class="filter-btn filter-info active" data-level="INFO">INFO</button>
+      <button type="button" class="filter-btn filter-success active" data-level="SUCCESS">SUCCESS</button>
+      <button type="button" class="filter-btn filter-warning active" data-level="WARNING">WARNING</button>
+      <button type="button" class="filter-btn filter-error active" data-level="ERROR">ERROR</button>
+      <button type="button" class="filter-btn filter-debug active" data-level="DEBUG">DEBUG</button>
+    </div>
+
+    <div id="log-container"></div>
+
+    <div class="status-bar">
+      <div id="log-count">Logs: 0</div>
+      <div id="logger-status">Logger Active</div>
+    </div>
+  </section>
+
+  <!-- 🧠 MCP Agent Panel -->
+  <section id="panel-agent" class="module-container">
+    <h2>Agent Module</h2>
+
+    <div class="agent-status">
+      <div>
+        <span class="agent-status-indicator status-active" id="module-status-dot"></span>
+        <span id="module-status">Active</span>
+      </div>
+      <div id="agent-count">Agents: 0</div>
+    </div>
+
+    <div class="controls">
+      <button type="button" id="add-agent-btn">Add Agent</button>
+      <button type="button" id="remove-agent-btn">Remove Agent</button>
+      <button type="button" id="assign-task-btn">Assign Random Task</button>
+    </div>
+
+    <div class="agent-display">
+      <div class="agent-list" id="agent-list">
+        <!-- Agents will be listed here -->
+      </div>
+
+      <div class="task-console" id="task-console">
+        <!-- Task execution logs will appear here -->
+      </div>
+    </div>
+  </section>
+
+  <!-- 🧠 IndexedDB + CSV knowledge -->
+  <section id="panel-memory" class="module-container">
+    <h2>Memory Module</h2>
+    <div class="memory-stats">
+      <div class="stat-card">
+        <div id="memory-size" class="stat-value">0 KB</div>
+        <div class="stat-label">Total Memory Size</div>
+      </div>
+      <div class="stat-card">
+        <div id="memory-items" class="stat-value">0</div>
+        <div class="stat-label">Stored Items</div>
+      </div>
+      <div class="stat-card">
+        <div id="memory-last-backup" class="stat-value">Never</div>
+        <div class="stat-label">Last Backup</div>
+      </div>
+    </div>
+
+    <div class="memory-controls">
+      <button type="button" id="backup-memory-btn" class="success-btn">Backup Memory</button>
+      <button type="button" id="restore-memory-btn">Restore Memory</button>
+      <button type="button" id="clear-memory-btn" class="danger-btn">Clear Memory</button>
+    </div>
+
+    <div class="memory-content">
+      <h3>Memory Contents</h3>
+      <div id="memory-list"></div>
+    </div>
+  </section>
+</main>
+
+<!-- 📜 Embed All Scripts Inline -->
+<script>
+  // Global state
+  const state = {
+    currentView: 'dashboard',
+    modules: {
+      llm: { status: 'initializing', lastHeartbeat: Date.now() },
+      agent: { status: 'initializing', lastHeartbeat: Date.now() },
+      worker: { status: 'initializing', lastHeartbeat: Date.now() },
+      db: { status: 'initializing', lastHeartbeat: Date.now() },
+      logger: { status: 'initializing', lastHeartbeat: Date.now() },
+      voice: { status: 'initializing', lastHeartbeat: Date.now() },
+      memory: { status: 'initializing', lastHeartbeat: Date.now() }
+    },
+    voice: {
+      active: false,
+      listening: false,
+      recognition: null
+    },
+    db: null,
+    agents: {},
+    workers: {},
+    tasks: [],
+    logs: [],
+    contacts: [],
+    httpMethods: {
+      standard: [],
+      advanced: [],
+      webdav: []
+    },
+    jsLibraries: [],
+    settings: {
+      systemName: 'Agent Lee',
+      backupInterval: 30,
+      heartbeatInterval: 5,
+      learningMode: 'active',
+      errorThreshold: 5,
+      memoryLimit: 1000
+    }
+  };
+
+  // Database initialization
+  const initializeDatabase = () => {
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open('AgentLeeCRM', 1);
+
+      request.onupgradeneeded = (event) => {
+        const db = event.target.result;
+
+        // Create object stores
+        if (!db.objectStoreNames.contains('contacts')) {
+          const contactsStore = db.createObjectStore('contacts', { keyPath: 'id', autoIncrement: true });
+          contactsStore.createIndex('email', 'email', { unique: true });
+          contactsStore.createIndex('name', 'name', { unique: false });
+        }
+
+        if (!db.objectStoreNames.contains('tasks')) {
+          const tasksStore = db.createObjectStore('tasks', { keyPath: 'id', autoIncrement: true });
+          tasksStore.createIndex('contactId', 'contactId', { unique: false });
+          tasksStore.createIndex('status', 'status', { unique: false });
+        }
+
+        if (!db.objectStoreNames.contains('notes')) {
+          const notesStore = db.createObjectStore('notes', { keyPath: 'id', autoIncrement: true });
+          notesStore.createIndex('contactId', 'contactId', { unique: false });
+        }
+
+        if (!db.objectStoreNames.contains('logs')) {
+          const logsStore = db.createObjectStore('logs', { keyPath: 'id', autoIncrement: true });
+          logsStore.createIndex('timestamp', 'timestamp', { unique: false });
+          logsStore.createIndex('level', 'level', { unique: false });
+        }
+
+        if (!db.objectStoreNames.contains('settings')) {
+          db.createObjectStore('settings', { keyPath: 'key' });
+        }
+
+        if (!db.objectStoreNames.contains('memory')) {
+          const memoryStore = db.createObjectStore('memory', { keyPath: 'id', autoIncrement: true });
+          memoryStore.createIndex('type', 'type', { unique: false });
+        }
+
+        if (!db.objectStoreNames.contains('httpMethods')) {
+          const httpMethodsStore = db.createObjectStore('httpMethods', { keyPath: 'id', autoIncrement: true });
+          httpMethodsStore.createIndex('method', 'method', { unique: false });
+          httpMethodsStore.createIndex('type', 'type', { unique: false });
+        }
+
+        if (!db.objectStoreNames.contains('jsLibraries')) {
+          const jsLibrariesStore = db.createObjectStore('jsLibraries', { keyPath: 'id', autoIncrement: true });
+          jsLibrariesStore.createIndex('library', 'library', { unique: false });
+          jsLibrariesStore.createIndex('category', 'category', { unique: false });
+        }
+      };
+
+      request.onsuccess = (event) => {
+        state.db = event.target.result;
+        console.log('Database initialized successfully');
+        resolve(state.db);
+      };
+
+      request.onerror = (event) => {
+        console.error('Database initialization error:', event.target.error);
+        reject(event.target.error);
+      };
+    });
+  };
+
+  // Database operations
+  const dbOps = {
+    // Add a record to a store
+    add: (storeName, data) => {
+      return new Promise((resolve, reject) => {
+        if (!state.db) {
+          reject(new Error('Database not initialized'));
+          return;
+        }
+
+        const transaction = state.db.transaction(storeName, 'readwrite');
+        const store = transaction.objectStore(storeName);
+        const request = store.add(data);
+
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+      });
+    },
+
+    // Get all records from a store
+    getAll: (storeName) => {
+      return new Promise((resolve, reject) => {
+        if (!state.db) {
+          reject(new Error('Database not initialized'));
+          return;
+        }
+
+        const transaction = state.db.transaction(storeName, 'readonly');
+        const store = transaction.objectStore(storeName);
+        const request = store.getAll();
+
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+      });
+    },
+
+    // Get a record by ID
+    getById: (storeName, id) => {
+      return new Promise((resolve, reject) => {
+        if (!state.db) {
+          reject(new Error('Database not initialized'));
+          return;
+        }
+
+        const transaction = state.db.transaction(storeName, 'readonly');
+        const store = transaction.objectStore(storeName);
+        const request = store.get(id);
+
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+      });
+    },
+
+    // Update a record
+    update: (storeName, data) => {
+      return new Promise((resolve, reject) => {
+        if (!state.db) {
+          reject(new Error('Database not initialized'));
+          return;
+        }
+
+        const transaction = state.db.transaction(storeName, 'readwrite');
+        const store = transaction.objectStore(storeName);
+        const request = store.put(data);
+
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+      });
+    },
+
+    // Delete a record
+    delete: (storeName, id) => {
+      return new Promise((resolve, reject) => {
+        if (!state.db) {
+          reject(new Error('Database not initialized'));
+          return;
+        }
+
+        const transaction = state.db.transaction(storeName, 'readwrite');
+        const store = transaction.objectStore(storeName);
+        const request = store.delete(id);
+
+        request.onsuccess = () => resolve(true);
+        request.onerror = () => reject(request.error);
+      });
+    },
+
+    // Clear a store
+    clear: (storeName) => {
+      return new Promise((resolve, reject) => {
+        if (!state.db) {
+          reject(new Error('Database not initialized'));
+          return;
+        }
+
+        const transaction = state.db.transaction(storeName, 'readwrite');
+        const store = transaction.objectStore(storeName);
+        const request = store.clear();
+
+        request.onsuccess = () => resolve(true);
+        request.onerror = () => reject(request.error);
+      });
+    }
+  };
+
+  // Logger functionality
+  const logger = {
+    log: (message, level = 'INFO', module = 'System') => {
+      const logEntry = {
+        message,
+        level: level.toUpperCase(),
+        module,
+        timestamp: Date.now()
+      };
+
+      // Add to state
+      state.logs.push(logEntry);
+
+      // Add to database
+      dbOps.add('logs', logEntry).catch(err => console.error('Error saving log:', err));
+
+      // Update UI if logger panel is active
+      if (state.currentView === 'logger') {
+        renderLogEntry(logEntry);
+      }
+
+      // Log to console as well
+      const consoleMethod = level.toLowerCase() === 'error' ? 'error' :
+                           level.toLowerCase() === 'warning' ? 'warn' : 'log';
+      console[consoleMethod](`[${module}] ${message}`);
+
+      return logEntry;
+    }
+  };
+
+  // Render a log entry in the UI
+  function renderLogEntry(logEntry) {
+    const logContainer = document.getElementById('log-container');
+    if (!logContainer) return;
+
+    const entryDiv = document.createElement('div');
+    entryDiv.className = `log-entry log-${logEntry.level.toLowerCase()}`;
+    entryDiv.dataset.level = logEntry.level;
+    entryDiv.dataset.module = logEntry.module;
+
+    // Format timestamp
+    const timestamp = new Date(logEntry.timestamp).toLocaleTimeString();
+
+    // Create log content
+    entryDiv.innerHTML = `
+      <span class="timestamp">[${timestamp}]</span>
+      <span class="module-name">[${logEntry.module}]</span>
+      <span class="log-level level-${logEntry.level.toLowerCase()}">${logEntry.level}</span>
+      <span class="log-message">${logEntry.message}</span>
+    `;
+
+    // Add to container
+    logContainer.appendChild(entryDiv);
+
+    // Scroll to bottom
+    logContainer.scrollTop = logContainer.scrollHeight;
+
+    // Update log count
+    const logCountElement = document.getElementById('log-count');
+    if (logCountElement) {
+      logCountElement.textContent = `Logs: ${state.logs.length}`;
+    }
+  }
+
+  // Load CSV data
+  async function loadCSVData() {
+    try {
+      logger.log('Loading HTTP methods and JS libraries data...', 'INFO', 'Memory');
+
+      // Load Standard HTTP Methods
+      const standardHttpMethods = [
+        { method: "GET", type: "Read", definition: "Retrieve data without modifying it.", useCase: "Display a user's profile information.", whyUseful: "Safe and idempotent; perfect for read-only views." },
+        { method: "POST", type: "Create", definition: "Submit data to the server to create a resource.", useCase: "Submit a support ticket form.", whyUseful: "Ideal for actions that result in new entries on the server." },
+        { method: "PUT", type: "Update (Full)", definition: "Replace a resource or create it if it doesn't exist.", useCase: "Update a product's details.", whyUseful: "Ensures the entire resource is replaced consistently." },
+        { method: "PATCH", type: "Update (Partial)", definition: "Apply partial modifications to a resource.", useCase: "Change only the user's email address.", whyUseful: "More efficient than PUT for partial updates." },
+        { method: "DELETE", type: "Remove", definition: "Delete a specified resource.", useCase: "Remove a user's outdated shipping address.", whyUseful: "Frees up storage and removes obsolete data." },
+        { method: "HEAD", type: "Metadata Fetch", definition: "Same as GET, but only returns headers.", useCase: "Check if a file exists before downloading.", whyUseful: "Reduces bandwidth when only metadata is needed." },
+        { method: "OPTIONS", type: "Capability Discovery", definition: "Returns allowed HTTP methods for a resource.", useCase: "Determine what actions are allowed on a resource.", whyUseful: "Helps clients interact with APIs dynamically." }
+      ];
+
+      // Load WebDAV HTTP Methods
+      const webdavHttpMethods = [
+        { method: "LOCK", type: "Concurrency Control", definition: "Lock a resource for exclusive editing.", useCase: "Lock a document during user edit session.", whyUseful: "Prevents edit conflicts in collaborative tools." },
+        { method: "UNLOCK", type: "Concurrency Control", definition: "Unlock a resource to allow other edits.", useCase: "Release lock after document is saved.", whyUseful: "Enables collaboration and edit coordination." },
+        { method: "PROPFIND", type: "Metadata Listing", definition: "Retrieve properties for a WebDAV resource.", useCase: "List all files in a user's project folder.", whyUseful: "Efficient for navigating structured file systems." },
+        { method: "PROPPATCH", type: "Metadata Update", definition: "Modify WebDAV resource properties.", useCase: "Update file tags or metadata without altering content.", whyUseful: "Keeps content intact while allowing rich metadata updates." },
+        { method: "MKCOL", type: "Structure Creation", definition: "Create a new collection (e.g., folder).", useCase: "Create a new project folder in a CMS.", whyUseful: "Organizes resources in hierarchical systems." },
+        { method: "COPY", type: "Duplication", definition: "Copy a resource to a new location.", useCase: "Backup a document by duplicating it.", whyUseful: "Creates exact replicas for redundancy or reuse." },
+        { method: "MOVE", type: "Relocation", definition: "Move a resource to a new URI.", useCase: "Promote draft to published content.", whyUseful: "Efficiently changes location without recreating." }
+      ];
+
+      // Load Advanced HTTP Methods
+      const advancedHttpMethods = [
+        { method: "QUERY", type: "Data Retrieval", definition: "Custom method to send complex search/filter requests with a body.", useCase: "Fetch data from a filtered dataset (e.g., 'orders where price > $100').", whyUseful: "GET can't handle large query bodies or complex filters." },
+        { method: "SEARCH", type: "Discovery", definition: "WebDAV method to execute search queries on structured resources.", useCase: "Search all docs for 'invoice' inside a project folder.", whyUseful: "Supports body-payload search operations unlike GET." },
+        { method: "REPORT", type: "Analytics", definition: "WebDAV method to retrieve metadata and structured reports.", useCase: "Generate document edit history or user activity reports.", whyUseful: "Built-in reporting for audit and tracking use cases." },
+        { method: "MKCALENDAR", type: "Scheduling", definition: "CalDAV method to create a new calendar resource.", useCase: "Create a calendar for project-specific deadlines.", whyUseful: "Foundational for collaborative scheduling systems." },
+        { method: "BIND", type: "Resource Linking", definition: "Create alternate references (aliases) to a resource.", useCase: "Link the same image into two folders.", whyUseful: "Supports flexible, multi-path references like symbolic links." }
+      ];
+
+      // Load JS Libraries
+      const jsLibraries = [
+        { category: "Core Libraries", library: "React.js", cdnLink: "https://unpkg.com/react@18.2.0/umd/react.production.min.js" },
+        { category: "Core Libraries", library: "ReactDOM", cdnLink: "https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js" },
+        { category: "Core Libraries", library: "Babel", cdnLink: "https://unpkg.com/@babel/standalone@7.21.4/babel.min.js" },
+        { category: "Core Libraries", library: "Redux", cdnLink: "https://cdn.jsdelivr.net/npm/redux@4.2.1/dist/redux.min.js" },
+        { category: "UI & Components", library: "Material-UI (MUI)", cdnLink: "https://unpkg.com/@mui/material@5.11.16/umd/material-ui.production.min.js" },
+        { category: "UI & Components", library: "Bootstrap 5 CSS", cdnLink: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" },
+        { category: "UI & Components", library: "Tailwind CSS", cdnLink: "https://cdn.tailwindcss.com" },
+        { category: "Data Visualization", library: "Chart.js", cdnLink: "https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js" },
+        { category: "Data Visualization", library: "D3.js", cdnLink: "https://d3js.org/d3.v7.min.js" },
+        { category: "Utility Libraries", library: "Lodash", cdnLink: "https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js" },
+        { category: "Utility Libraries", library: "Axios", cdnLink: "https://cdn.jsdelivr.net/npm/axios@1.3.5/dist/axios.min.js" }
+      ];
+
+      // Store in state
+      state.httpMethods.standard = standardHttpMethods;
+      state.httpMethods.webdav = webdavHttpMethods;
+      state.httpMethods.advanced = advancedHttpMethods;
+      state.jsLibraries = jsLibraries;
+
+      // Store in IndexedDB
+      await dbOps.clear('httpMethods');
+      await dbOps.clear('jsLibraries');
+
+      // Store Standard HTTP Methods
+      for (const method of standardHttpMethods) {
+        await dbOps.add('httpMethods', {
+          ...method,
+          category: 'standard'
+        });
+      }
+
+      // Store WebDAV HTTP Methods
+      for (const method of webdavHttpMethods) {
+        await dbOps.add('httpMethods', {
+          ...method,
+          category: 'webdav'
+        });
+      }
+
+      // Store Advanced HTTP Methods
+      for (const method of advancedHttpMethods) {
+        await dbOps.add('httpMethods', {
+          ...method,
+          category: 'advanced'
+        });
+      }
+
+      // Store JS Libraries
+      for (const lib of jsLibraries) {
+        await dbOps.add('jsLibraries', lib);
+      }
+
+      logger.log('HTTP methods and JS libraries data loaded successfully', 'SUCCESS', 'Memory');
+    } catch (error) {
+      logger.log(`Error loading CSV data: ${error.message}`, 'ERROR', 'Memory');
+    }
+  }
+
+  // Voice control functionality
+  const voiceControl = {
+    recognition: null,
+    listening: false,
+
+    init: function() {
+      if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+        logger.log('Speech recognition not supported in this browser', 'WARNING', 'Voice');
+        return false;
+      }
+
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      this.recognition = new SpeechRecognition();
+      this.recognition.continuous = false;
+      this.recognition.interimResults = false;
+      this.recognition.lang = 'en-US';
+
+      this.recognition.onstart = () => {
+        this.listening = true;
+        document.getElementById('voice-status-indicator').className = 'status-indicator status-active';
+        document.getElementById('voice-status-text').textContent = 'Listening...';
+        document.getElementById('mic-button').classList.add('listening');
+        logger.log('Voice recognition started', 'INFO', 'Voice');
+      };
+
+      this.recognition.onend = () => {
+        this.listening = false;
+        document.getElementById('voice-status-indicator').className = 'status-indicator status-inactive';
+        document.getElementById('voice-status-text').textContent = 'Voice Ready';
+        document.getElementById('mic-button').classList.remove('listening');
+        logger.log('Voice recognition ended', 'INFO', 'Voice');
+      };
+
+      this.recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        document.getElementById('voice-response').textContent = transcript;
+        logger.log(`Voice command received: ${transcript}`, 'INFO', 'Voice');
+        this.processCommand(transcript);
+      };
+
+      this.recognition.onerror = (event) => {
+        logger.log(`Voice recognition error: ${event.error}`, 'ERROR', 'Voice');
+      };
+
+      logger.log('Voice control initialized', 'INFO', 'Voice');
+      return true;
+    },
+
+    start: function() {
+      if (!this.recognition) {
+        if (!this.init()) {
+          return false;
+        }
+      }
+
+      if (!this.listening) {
+        try {
+          this.recognition.start();
+        } catch (e) {
+          logger.log(`Error starting voice recognition: ${e.message}`, 'ERROR', 'Voice');
+          return false;
+        }
+      }
+
+      return true;
+    },
+
+    stop: function() {
+      if (this.recognition && this.listening) {
+        try {
+          this.recognition.stop();
+        } catch (e) {
+          logger.log(`Error stopping voice recognition: ${e.message}`, 'ERROR', 'Voice');
+          return false;
+        }
+      }
+
+      return true;
+    },
+
+    processCommand: function(command) {
+      // Process command with Gemini integration
+      const lowerCommand = command.toLowerCase();
+
+      // Check for Claude invocation
+      if (lowerCommand.startsWith('/call claude') || lowerCommand.startsWith('call claude')) {
+        // Extract the query for Claude
+        const claudeQuery = command.replace(/^(\/call claude|call claude)/i, '').trim();
+        if (claudeQuery) {
+          this.callClaude(claudeQuery);
+          return;
+        } else {
+          document.getElementById('voice-response').textContent = "Please provide a query for Claude.";
+          return;
+        }
+      }
+
+      // Handle basic navigation commands directly
+      if (lowerCommand.includes('switch to') || lowerCommand.includes('open')) {
+        // Handle navigation commands
+        for (const view of ['dashboard', 'brain', 'workers', 'crm', 'logger', 'agent', 'memory']) {
+          if (lowerCommand.includes(view)) {
+            changeView(view);
+            return;
+          }
+        }
+      } else if (lowerCommand.includes('add contact') || lowerCommand.includes('new contact')) {
+        // Handle CRM commands
+        changeView('crm');
+        // Trigger add contact functionality
+        document.getElementById('add-contact-btn').click();
+      } else if (lowerCommand.includes('clear logs')) {
+        // Handle logger commands
+        changeView('logger');
+        document.getElementById('clear-logs-btn').click();
+      } else if (lowerCommand.includes('add agent')) {
+        // Handle agent commands
+        changeView('agent');
+        document.getElementById('add-agent-btn').click();
+      } else if (lowerCommand.includes('http methods') || lowerCommand.includes('libraries')) {
+        // Handle memory commands
+        changeView('memory');
+        // Display HTTP methods or libraries
+        this.displayMemoryInfo(lowerCommand);
+      } else {
+        // Send to Gemini for processing
+        this.callGemini(command);
+      }
+    },
+
+    // Display memory information based on voice command
+    displayMemoryInfo: function(command) {
+      if (command.includes('http methods')) {
+        logger.log('Displaying HTTP methods information', 'INFO', 'Memory');
+        // In a real implementation, this would display HTTP methods information
+        document.getElementById('voice-response').textContent = "Displaying HTTP methods information";
+      } else if (command.includes('libraries')) {
+        logger.log('Displaying JS libraries information', 'INFO', 'Memory');
+        // In a real implementation, this would display JS libraries information
+        document.getElementById('voice-response').textContent = "Displaying JS libraries information";
+      }
+    },
+
+    // Call Gemini API
+    callGemini: function(query) {
+      logger.log(`Sending query to Gemini: ${query}`, 'INFO', 'Voice');
+      document.getElementById('voice-response').textContent = "Processing with Gemini...";
+
+      // In a real implementation, this would call the Gemini API
+      // For this demo, we'll simulate a response
+      setTimeout(() => {
+        // Simulate Gemini processing
+        const responses = [
+          "I've analyzed your request and can help with that.",
+          "Let me process that information for you.",
+          "I understand what you're asking for.",
+          "I can assist you with that request.",
+          "Working on your query now."
+        ];
+
+        const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+        document.getElementById('voice-response').textContent = randomResponse;
+
+        // Log the response
+        logger.log(`Gemini response: ${randomResponse}`, 'INFO', 'Voice');
+
+        // In a real implementation, we would process the Gemini response
+        // and take appropriate actions based on the response
+      }, 1000);
+    },
+
+    // Call Claude API (only accessible via Gemini)
+    callClaude: function(query) {
+      logger.log(`Sending query to Claude: ${query}`, 'INFO', 'Voice');
+      document.getElementById('voice-response').textContent = "Processing with Claude...";
+
+      // In a real implementation, this would call the Claude API
+      // For this demo, we'll simulate a response
+      setTimeout(() => {
+        // Simulate Claude processing
+        const responses = [
+          "Claude here. I've analyzed your request in depth.",
+          "This is Claude. I can provide a detailed analysis of your query.",
+          "Claude responding to your specialized request.",
+          "As Claude, I can offer a nuanced perspective on this topic.",
+          "Claude here with a comprehensive response to your query."
+        ];
+
+        const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+        document.getElementById('voice-response').textContent = randomResponse;
+
+        // Log the response
+        logger.log(`Claude response: ${randomResponse}`, 'INFO', 'Voice');
+
+        // In a real implementation, we would process the Claude response
+        // and take appropriate actions based on the response
+      }, 1500);
+    }
+  };
+
+  // Memory backup and restore functions
+  async function backupMemory() {
+    try {
+      logger.log('Starting memory backup...', 'INFO', 'Memory');
+
+      // Get all memory items
+      const httpMethods = await dbOps.getAll('httpMethods');
+      const jsLibraries = await dbOps.getAll('jsLibraries');
+
+      // Create backup object
+      const backup = {
+        timestamp: Date.now(),
+        version: '1.0',
+        httpMethods,
+        jsLibraries
+      };
+
+      // Convert to JSON
+      const backupJson = JSON.stringify(backup, null, 2);
+
+      // Create download
+      const blob = new Blob([backupJson], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `agent-lee-memory-backup-${new Date().toISOString().slice(0,19).replace(/:/g, '-')}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      // Update last backup time
+      document.getElementById('memory-last-backup').textContent = new Date().toLocaleString();
+
+      logger.log('Memory backup completed successfully', 'SUCCESS', 'Memory');
+    } catch (error) {
+      logger.log(`Memory backup failed: ${error.message}`, 'ERROR', 'Memory');
+    }
+  }
+
+  // Restore memory from file
+  function restoreMemory() {
+    try {
+      logger.log('Starting memory restore...', 'INFO', 'Memory');
+
+      // Create file input
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.json';
+
+      input.onchange = async (event) => {
+        try {
+          const file = event.target.files[0];
+          if (!file) {
+            logger.log('No file selected for restore', 'WARNING', 'Memory');
+            return;
+          }
+
+          // Read file
+          const reader = new FileReader();
+          reader.onload = async (e) => {
+            try {
+              // Parse backup
+              const backup = JSON.parse(e.target.result);
+
+              // Validate backup
+              if (!backup.httpMethods || !backup.jsLibraries) {
+                throw new Error('Invalid backup format');
+              }
+
+              // Clear existing memory
+              await dbOps.clear('httpMethods');
+              await dbOps.clear('jsLibraries');
+
+              // Restore items
+              for (const method of backup.httpMethods) {
+                await dbOps.add('httpMethods', method);
+              }
+
+              for (const lib of backup.jsLibraries) {
+                await dbOps.add('jsLibraries', lib);
+              }
+
+              // Update state
+              state.httpMethods.standard = backup.httpMethods.filter(m => m.category === 'standard');
+              state.httpMethods.webdav = backup.httpMethods.filter(m => m.category === 'webdav');
+              state.httpMethods.advanced = backup.httpMethods.filter(m => m.category === 'advanced');
+              state.jsLibraries = backup.jsLibraries;
+
+              logger.log(`Memory restore completed successfully.`, 'SUCCESS', 'Memory');
+            } catch (error) {
+              logger.log(`Error processing backup file: ${error.message}`, 'ERROR', 'Memory');
+            }
+          };
+
+          reader.readAsText(file);
+        } catch (error) {
+          logger.log(`Error reading backup file: ${error.message}`, 'ERROR', 'Memory');
+        }
+      };
+
+      // Trigger file selection
+      input.click();
+    } catch (error) {
+      logger.log(`Memory restore failed: ${error.message}`, 'ERROR', 'Memory');
+    }
+  }
+
+  // Clear memory
+  async function clearMemory() {
+    try {
+      if (confirm('Are you sure you want to clear all memory data? This action cannot be undone.')) {
+        logger.log('Clearing memory...', 'WARNING', 'Memory');
+
+        // Clear memory store
+        await dbOps.clear('httpMethods');
+        await dbOps.clear('jsLibraries');
+
+        // Clear state
+        state.httpMethods.standard = [];
+        state.httpMethods.webdav = [];
+        state.httpMethods.advanced = [];
+        state.jsLibraries = [];
+
+        // Update stats
+        document.getElementById('memory-size').textContent = '0 B';
+        document.getElementById('memory-items').textContent = '0';
+
+        logger.log('Memory cleared successfully', 'SUCCESS', 'Memory');
+      }
+    } catch (error) {
+      logger.log(`Error clearing memory: ${error.message}`, 'ERROR', 'Memory');
+    }
+  }
+
+  // Initialize the application
+  async function initializeApp() {
+    try {
+      // Initialize database
+      await initializeDatabase();
+      logger.log('Database initialized successfully', 'INFO', 'System');
+
+      // Load CSV data
+      await loadCSVData();
+
+      // Initialize voice control
+      voiceControl.init();
+
+      // Set up event listeners
+      setupEventListeners();
+
+      // Update memory stats
+      updateMemoryStats();
+
+      // Update system status
+      document.getElementById('system-status').textContent = 'Ready';
+      document.getElementById('system-status').className = 'status-badge status-active';
+
+      logger.log('Agent Lee initialized successfully', 'INFO', 'System');
+    } catch (error) {
+      logger.log(`Initialization error: ${error.message}`, 'ERROR', 'System');
+      document.getElementById('system-status').textContent = 'Error';
+      document.getElementById('system-status').className = 'status-badge status-error';
+    }
+  }
+
+  // Update memory stats
+  async function updateMemoryStats() {
+    try {
+      // Get all memory items
+      const httpMethods = await dbOps.getAll('httpMethods');
+      const jsLibraries = await dbOps.getAll('jsLibraries');
+
+      // Calculate total size (approximate)
+      const totalSize = JSON.stringify(httpMethods).length + JSON.stringify(jsLibraries).length;
+      const formattedSize = totalSize < 1024 ?
+        `${totalSize} B` :
+        `${(totalSize / 1024).toFixed(2)} KB`;
+
+      // Update UI
+      document.getElementById('memory-size').textContent = formattedSize;
+      document.getElementById('memory-items').textContent = httpMethods.length + jsLibraries.length;
+      document.getElementById('memory-last-backup').textContent = 'Not backed up';
+
+      logger.log('Memory stats updated', 'INFO', 'Memory');
+    } catch (error) {
+      logger.log(`Error updating memory stats: ${error.message}`, 'ERROR', 'Memory');
+    }
+  }
+
+  // Set up event listeners
+  function setupEventListeners() {
+    // Navigation buttons
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const moduleId = this.id.replace('-btn', '');
+        changeView(moduleId);
+      });
+    });
+
+    // Logger controls
+    document.getElementById('clear-logs-btn')?.addEventListener('click', function() {
+      document.getElementById('log-container').innerHTML = '';
+      state.logs = [];
+      dbOps.clear('logs');
+      document.getElementById('log-count').textContent = 'Logs: 0';
+      logger.log('Logs cleared', 'INFO', 'Logger');
+    });
+
+    document.getElementById('test-log-btn')?.addEventListener('click', function() {
+      generateTestLog();
+    });
+
+    // Filter buttons
+    document.querySelectorAll('.filter-btn').forEach(button => {
+      button.addEventListener('click', function() {
+        const level = this.dataset.level;
+        this.classList.toggle('active');
+        toggleLogFilter(level);
+      });
+    });
+
+    // Voice control
+    document.getElementById('mic-button')?.addEventListener('click', function() {
+      if (voiceControl.listening) {
+        voiceControl.stop();
+      } else {
+        voiceControl.start();
+      }
+    });
+
+    // Memory controls
+    document.getElementById('backup-memory-btn')?.addEventListener('click', function() {
+      backupMemory();
+    });
+
+    document.getElementById('restore-memory-btn')?.addEventListener('click', function() {
+      restoreMemory();
+    });
+
+    document.getElementById('clear-memory-btn')?.addEventListener('click', function() {
+      clearMemory();
+    });
+  }
+
+  // Change view
+  function changeView(viewName) {
+    // Map view names to their corresponding IDs
+    const viewMap = {
+      'dashboard': 'dashboard',
+      'brain': 'llm',
+      'workers': 'worker',
+      'crm': 'crm',
+      'logger': 'logger',
+      'agent': 'agent',
+      'memory': 'memory'
+    };
+
+    const moduleId = viewMap[viewName] || viewName;
+
+    // Hide all modules
+    document.querySelectorAll('.module-container').forEach(container => {
+      container.classList.remove('active');
+    });
+
+    // Show selected module
+    const selectedModule = document.getElementById(`panel-${moduleId}`);
+    if (selectedModule) {
+      selectedModule.classList.add('active');
+    }
+
+    // Update active button
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      btn.classList.remove('active');
+    });
+
+    const activeBtn = document.getElementById(`${moduleId}-btn`);
+    if (activeBtn) {
+      activeBtn.classList.add('active');
+    }
+
+    // Update state
+    state.currentView = moduleId;
+
+    logger.log(`Changed view to ${viewName}`, 'INFO', 'Navigation');
+  }
+
+  // Toggle log filter
+  function toggleLogFilter(level) {
+    const isActive = document.querySelector(`.filter-btn[data-level="${level}"]`).classList.contains('active');
+
+    // Hide/show log entries based on filter
+    document.querySelectorAll(`.log-entry[data-level="${level}"]`).forEach(entry => {
+      entry.style.display = isActive ? 'block' : 'none';
+    });
+  }
+
+  // Generate a test log entry
+  function generateTestLog() {
+    const levels = ['INFO', 'SUCCESS', 'WARNING', 'ERROR', 'DEBUG'];
+    const modules = ['Dashboard', 'Brain', 'Agent', 'Worker', 'Database', 'Logger', 'Voice', 'Memory'];
+
+    const randomLevel = levels[Math.floor(Math.random() * levels.length)];
+    const randomModule = modules[Math.floor(Math.random() * modules.length)];
+
+    logger.log(`Test log entry generated at ${new Date().toLocaleTimeString()}`, randomLevel, randomModule);
+  }
+
+  // Initialize the application when the DOM is loaded
+  document.addEventListener('DOMContentLoaded', initializeApp);
+</script>
+
+</body>
+</html>

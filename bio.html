@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Brand - Artist Bio</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base Variables */
+        :root {
+            --primary-bg: #0A192F;
+            --secondary-bg: #112240;
+            --tertiary-bg: #1D2E4C;
+            --accent-teal: #00FFD4;
+            --accent-purple: #6A0DAD;
+            --accent-coral: #FF4757;
+            --text-primary: #E6F1FF;
+            --text-secondary: #8892B0;
+            --shadow-normal: 0 10px 30px -10px rgba(2, 12, 27, 0.7);
+            --shadow-hover: 0 20px 40px rgba(0, 255, 212, 0.2);
+            --transition-standard: all 0.3s ease;
+            --demo-red: #FF3333;
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: var(--primary-bg);
+            background-image: url('min2sqm4w7.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Add overlay to improve readability with background image */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 25, 47, 0.7);
+            z-index: -1;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button, .btn {
+            cursor: pointer;
+            border: none;
+            outline: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+        }
+
+        h3 {
+            font-size: 2rem;
+        }
+
+        h4 {
+            font-size: 1.5rem;
+        }
+
+        p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(to right, var(--accent-teal), var(--accent-purple));
+            color: var(--primary-bg);
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 30px;
+            display: inline-block;
+            transition: var(--transition-standard);
+            text-align: center;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent-teal);
+            border: 2px solid var(--accent-teal);
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 30px;
+            display: inline-block;
+            transition: var(--transition-standard);
+            text-align: center;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(0, 255, 212, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(10, 25, 47, 0.8);
+            backdrop-filter: blur(10px);
+            transition: var(--transition-standard);
+            padding: 20px 0;
+        }
+
+        header.scrolled {
+            padding: 15px 0;
+            background-color: rgba(10, 25, 47, 0.95);
+            box-shadow: var(--shadow-normal);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 900;
+            font-size: 1.8rem;
+            position: relative;
+        }
+
+        .logo-accent {
+            background: linear-gradient(to right, var(--accent-teal), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            transition: var(--transition-standard);
+            font-weight: 500;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-teal);
+        }
+
+        .nav-links a:after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-teal);
+            transition: var(--transition-standard);
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .nav-links .active a {
+            color: var(--accent-teal);
+        }
+
+        .nav-links .active a:after {
+            width: 100%;
+        }
+
+        .admin-link {
+            margin-left: 20px;
+        }
+
+        /* Mobile Menu */
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Demo Banner */
+        .demo-banner {
+            position: fixed;
+            top: 120px;
+            right: 20px;
+            width: 250px;
+            background-color: var(--demo-red);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-weight: 700;
+            font-size: 14px;
+            z-index: 900;
+            box-shadow: 0 5px 15px rgba(255, 51, 51, 0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            border-radius: 10px;
+            transform: rotate(5deg);
+        }
+        
+        .demo-banner-button {
+            background-color: white;
+            color: var(--demo-red);
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition-standard);
+        }
+        
+        .demo-banner-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Bio Page */
+        .bio {
+            padding: 100px 0;
+        }
+
+        /* Bio Intro Section */
+        .bio-intro {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 50px;
+            margin-bottom: 80px;
+            align-items: center;
+        }
+
+        .bio-image-container {
+            position: relative;
+        }
+
+        .bio-image {
+            border-radius: 15px;
+            box-shadow: var(--shadow-normal);
+            width: 100%;
+        }
+
+        .bio-image-container:before {
+            content: "";
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--accent-teal);
+            border-radius: 15px;
+            z-index: -1;
+        }
+
+        .bio-intro-content {
+            padding: 0 20px;
+        }
+
+        .bio-name {
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+        }
+
+        .bio-subtitle {
+            font-size: 1.2rem;
+            color: var(--accent-teal);
+            margin-bottom: 20px;
+        }
+
+        .bio-quote {
+            background-color: var(--secondary-bg);
+            padding: 30px;
+            border-radius: 15px;
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .quote-icon {
+            font-size: 2rem;
+            color: var(--accent-teal);
+            opacity: 0.3;
+            position: absolute;
+            top: 15px;
+            left: 15px;
+        }
+        
+        .bio-quote p {
+            font-style: italic;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            font-weight: 300;
+            padding-left: 30px;
+        }
+
+        .bio-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .bio-stat {
+            text-align: center;
+            background-color: var(--secondary-bg);
+            padding: 15px;
+            border-radius: 10px;
+            transition: var(--transition-standard);
+        }
+
+        .bio-stat:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .bio-stat .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            background: linear-gradient(to right, var(--accent-teal), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .bio-stat .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: var(--tertiary-bg);
+            transition: var(--transition-standard);
+        }
+
+        .social-link:hover {
+            background: linear-gradient(to right, var(--accent-teal), var(--accent-purple));
+            transform: translateY(-5px);
+        }
+
+        /* Timeline Section */
+        .bio-timeline {
+            position: relative;
+            margin: 60px 0;
+        }
+
+        .bio-timeline:before {
+            content: '';
+            position: absolute;
+            width: 3px;
+            background-color: var(--accent-teal);
+            background: linear-gradient(to bottom, var(--accent-teal), var(--accent-purple));
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            margin-bottom: 100px;
+            position: relative;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-year {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(to right, var(--accent-teal), var(--accent-purple));
+            border-radius: 50%;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-bg);
+            font-weight: 700;
+            font-size: 1.2rem;
+            z-index: 5;
+        }
+
+        .timeline-content {
+            position: relative;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .timeline-item .timeline-content .timeline-image {
+            order: 1;
+        }
+
+        .timeline-item .timeline-content .timeline-text {
+            order: 2;
+            padding-left: 60px;
+        }
+
+        .timeline-item.reverse .timeline-content .timeline-image {
+            order: 2;
+        }
+
+        .timeline-item.reverse .timeline-content .timeline-text {
+            order: 1;
+            padding-left: 0;
+            padding-right: 60px;
+        }
+
+        .timeline-image img {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: var(--shadow-normal);
+        }
+
+        .timeline-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .timeline-text p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        /* Timeline Milestone Card */
+        .milestone-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background-color: var(--secondary-bg);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        .milestone-icon {
+            width: Ū 40px;
+            height: 40px;
+            background-color: rgba(0, 255, 212, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-teal);
+            font-size: 1.2rem;
+        }
+
+        .milestone-text {
+            flex: 1;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .milestone-text strong {
+            color: var(--text-primary);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Album Highlight */
+        .album-highlight {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            background-color: var(--secondary-bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        .album-cover {
+            width: 100px;
+            height: 100px;
+            border-radius: 5px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .album-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .album-info {
+            flex: 1;
+        }
+
+        .album-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .album-year, .album-tracks, .album-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 3px;
+        }
+
+        /* Tour Highlight */
+        .tour-highlight {
+            background-color: var(--secondary-bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        .tour-highlight h4 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .tour-stats {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .tour-stat {
+            text-align: center;
+        }
+
+        .tour-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-teal);
+            margin-bottom: 5px;
+        }
+
+        .tour-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Quote Full */
+        .bio-quote-full {
+            position: relative;
+            padding: 60px 40px 40px;
+            background-color: var(--secondary-bg);
+            border-radius: 15px;
+            margin: 80px 0;
+            text-align: center;
+        }
+
+        .quote-icon-large {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 3rem;
+            color: var(--accent-teal);
+            background-color: var(--primary-bg);
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .bio-quote-full blockquote {
+            font-size: 1.4rem;
+            font-weight: 300;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-style: italic;
+            color: var(--text-primary);
+        }
+
+        .bio-quote-full cite {
+            color: var(--text-secondary);
+            font-style: normal;
+        }
+
+        /* Bio CTA */
+        .bio-cta {
+            text-align: center;
+            margin-top: 60px;
+            background: linear-gradient(to bottom right, rgba(0, 255, 212, 0.1), rgba(106, 13, 173, 0.1));
+            padding: 40px;
+            border-radius: 15px;
+        }
+
+        .bio-cta h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .bio-cta p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary-bg);
+            padding: 60px 0 30px;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+
+        .footer-text {
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .footer-column h4 {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .footer-column h4::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 30px;
+            height: 2px;
+            background: linear-gradient(to right, var(--accent-teal), var(--accent-purple));
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            transition: var(--transition-standard);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-teal);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            .features-grid,
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .bio-container,
+            .collab-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .collab-image {
+                order: 1;
+            }
+            .collab-content {
+                order: 2;
+            }
+            .mobile-toggle {
+                display: block;
+            }
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                right: -100%;
+                width: 80%;
+                background-color: var(--secondary-bg);
+                flex-direction: column;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: var(--shadow-normal);
+                transition: var(--transition-standard);
+            }
+            .nav-links.active {
+                right: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .hero-description {
+                max-width: 100%;
+            }
+            .hero-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .btn-primary,
+            .btn-secondary {
+                width: 100%;
+            }
+            .stats-grid,
+            .features-grid,
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            .bio-intro {
+                grid-template-columns: 1fr;
+            }
+            .bio-timeline:before {
+                left: 30px;
+            }
+            .timeline-year {
+                left: 30px;
+                width: 60px;
+                height: 60px;
+                font-size: 1rem;
+            }
+            .timeline-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .timeline-item .timeline-content .timeline-image,
+            .timeline-item.reverse .timeline-content .timeline-image {
+                order: 1;
+            }
+            .timeline-item .timeline-content .timeline-text,
+            .timeline-item.reverse .timeline-content .timeline-text {
+                order: 2;
+                padding-left: 0;
+                padding-right: 0;
+                margin-left: 60px;
+            }
+            .bio-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .bio-stats {
+                grid-template-columns: 1fr;
+            }
+            .album-highlight {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .album-cover {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 1/1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Demo Banner -->
+    <div class="demo-banner">
+        <span>DEMO TEMPLATE</span>
+        <span>Premium artist platform with full monetization tools</span>
+        <button class="demo-banner-button">PURCHASE NOW</button>
+    </div>
+    
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <span class="logo-accent">The</span>Brand
+                </a>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html">Home</a></li>
+                    <li class="active"><a href="bio.html">Bio</a></li>
+                    <li><a href="merch.html">Merch</a></li>
+                    <li><a href="community.html">Community</a></li>
+                    <li><a href="admin.html" id="adminLoginButton" class="admin-link">Admin</a></li>
+                </ul>
+                <button class="mobile-toggle" id="mobileToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- BIO PAGE -->
+    <section class="bio">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">The Journey</h2>
+                <p class="section-subtitle">The complete story behind the artist and their creative evolution</p>
+            </div>
+            
+            <div class="bio-intro">
+                <div class="bio-image-container">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3" alt="Artist Profile" class="bio-image">
+                </div>
+                <div class="bio-intro-content">
+                    <h2 class="bio-name">Artist Name</h2>
+                    <div class="bio-subtitle">Singer / Songwriter / Producer</div>
+                    <div class="bio-quote">
+                        <i class="fas fa-quote-left quote-icon"></i>
+                        <p>"Music isn't just what I do—it's the language I use to translate the world around me."</p>
+                    </div>
+                    <div class="bio-stats">
+                        <div class="bio-stat">
+                            <div class="stat-number">3</div>
+                            <div class="stat-label">Studio Albums</div>
+                        </div>
+                        <div class="bio-stat">
+                            <div class="stat-number">12M+</div>
+                            <div class="stat-label">Streams</div>
+                        </div>
+                        <div class="bio-stat">
+                            <div class="stat-number">42</div>
+                            <div class="stat-label">Shows</div>
+                        </div>
+                        <div class="bio-stat">
+                            <div class="stat-number">2</div>
+                            <div class="stat-label">Grammy Nominations</div>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-spotify"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bio-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">2012</div>
+                    <div class="timeline-content">
+                        <div class="timeline-image">
+                            <img src="https://images.unsplash.com/photo-1615178381718-c11c79196dcc?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3" alt="Early Years">
+                        </div>
+                        <div class="timeline-text">
+                            <h3>The Beginning</h3>
+                            <p>Born and raised in a small town outside Chicago, I grew up surrounded by my parents' eclectic record collection—everything from Motown classics to experimental jazz. At age 7, I started piano lessons, but it wasn't until I found my mom's old acoustic guitar in the attic that something clicked.</p>
+                            <p>By 15, I was writing my own songs, performing at local cafes and uploading covers to YouTube. What started as weekend hobby quickly became an obsession that would shape my entire life path.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item reverse">
+                    <div class="timeline-year">2016</div>
+                    <div class="timeline-content">
+                        <div class="timeline-image">
+                            <img src="https://images.unsplash.com/photo-1574169208507-84376144848b?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3" alt="First Record">
+                        </div>
+                        <div class="timeline-text">
+                            <h3>First EP & Breakthrough</h3>
+                            <p>After moving to Brooklyn and working night shifts at a 24-hour diner, I recorded my first EP, "Midnight Reflections," in a converted storage unit with equipment borrowed from friends. The project was entirely self-funded and self-produced.</p>
+                            <p>Against all odds, the lead single caught the attention of several music blogs and eventually made its way to college radio. When the track "Silver Moments" went viral after being featured in a popular web series, everything changed overnight.</p>
+                            <div class="milestone-card">
+                                <div class="milestone-icon"><i class="fas fa-award"></i></div>
+                                <div class="milestone-text">
+                                    <strong>Milestone:</strong> First EP "Midnight Reflections" reaches #3 on indie charts
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-year">2018</div>
+                    <div class="timeline-content">
+                        <div class="timeline-image">
+                            <img src="https://images.unsplash.com/photo-1598387993281-cecf8b71a8f8?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3" alt="First Album">
+                        </div>
+                        <div class="timeline-text">
+                            <h3>Debut Album & First Tour</h3>
+                            <p>With a small but dedicated fanbase and the support of an independent label, I recorded my debut album "Electric Dreams in Analog Rooms." The fusion of electronic elements with stripped-back acoustic arrangements created a sound that critics described as "hauntingly familiar yet refreshingly innovative."</p>
+                            <p>The album cycle included my first national tour, opening for established acts and eventually headlining smaller venues. Those nights on the road—sleeping on couches, meeting fans in person, and refining my live performance—taught me more about music and connection than any studio session ever could.</p>
+                            <div class="album-highlight">
+                                <div class="album-cover">
+                                    <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3" alt="Album Cover">
+                                </div>
+                                <div class="album-info">
+                                    <h4>Electric Dreams in Analog Rooms</h4>
+                                    <div class="album-year">2018</div>
+                                    <div class="album-tracks">12 tracks • 48 minutes</div>
+                                    <div class="album-label">Independent release</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item reverse">
+                    <div class="timeline-year">2020</div>
+                    <div class="timeline-content">
+                        <div class="timeline-image">
+                            <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3" alt="Sophomore Album">
+                        </div>
+                        <div class="timeline-text">
+                            <h3>Sophomore Album & Critical Acclaim</h3>
+                            <p>During the global pandemic, I found myself isolated in a cabin by the lake, armed with just my instruments and a simple recording setup. What emerged was "Whispers Through Walls"—a deeply introspective album that explored themes of isolation, technology, and finding human connection in an increasingly disconnected world.</p>
+                            <p>The album resonated strongly during a time when everyone was experiencing their own version of isolation. The song "Digital Distance" was nominated for a Grammy, and the album was featured on several "Best of the Year" lists despite minimal traditional promotion.</p>
+                            <div class="milestone-card">
+                                <div class="milestone-icon"><i class="fas fa-trophy"></i></div>
+                                <div class="milestone-text">
+                                    <strong>Milestone:</strong> "Digital Distance" receives Grammy nomination for Song of the Year
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-year">2022</div>
+                    <div class="timeline-content">
+                        <div class="timeline-image">
+                            <img src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3" alt="World Tour">
+                        </div>
+                        <div class="timeline-text">
+                            <h3>Collaboration Album & World Tour</h3>
+                            <p>My third album "Collective Frequencies" represented a dramatic shift in my creative process. Instead of working in isolation, I collaborated with artists from around the world, incorporating influences from jazz, classical, electronic, and traditional folk music from various cultures.</p>
+                            <p>The subsequent world tour brought these collaborations to life on stage with rotating guest performers in each city. The tour culminated in a special live-streamed concert from Tokyo featuring all 15 collaborators performing together for the first and only time.</p>
+                            <div class="tour-highlight">
+                                <h4>Collective Frequencies World Tour</h4>
+                                <div class="tour-stats">
+                                    <div class="tour-stat">
+                                        <div class="tour-number">24</div>
+                                        <div class="tour-label">Countries</div>
+                                    </div>
+                                    <div class="tour-stat">
+                                        <div class="tour-number">42</div>
+                                        <div class="tour-label">Cities</div>
+                                    </div>
+                                    <div class="tour-stat">
+                                        <div class="tour-number">86</div>
+                                        <div class="tour-label">Shows</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item reverse">
+                    <div class="timeline-year">2023</div>
+                    <div class="timeline-content">
+                        <div class="timeline-image">
+                            <img src="https://images.unsplash.com/photo-1571330735066-03aaa9429d89?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3" alt="Current Work">
+                        </div>
+                        <div class="timeline-text">
+                            <h3>Present & Future</h3>
+                            <p>Today, I'm focusing on expanding my creative horizons beyond just recording and touring. I've launched a small independent label to support emerging artists, scored my first feature film, and started a mentorship program for young musicians from underrepresented communities.</p>
+                            <p>My fourth album is currently in the works, exploring themes of legacy, community, and the responsibility that comes with having a platform. I'm experimenting with orchestral arrangements and working with a children's choir for several tracks—stretching my sound in new and exciting directions.</p>
+                            <p>As I look to the future, I'm most excited about continuing to evolve as an artist while helping to create space for new voices in the industry. Music has given me so much, and I'm passionate about paying that forward.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bio-quote-full">
+                <i class="fas fa-quote-left quote-icon-large"></i>
+                <blockquote>
+                    "Every album is a time capsule—a document of who you were, what you believed, and how you interpreted the world at a specific moment. The beautiful thing about this journey is watching those capsules collect, seeing the evolution not just as an artist, but as a human being."
+                </blockquote>
+                <cite>— Artist Name, Grammy Awards Acceptance Speech</cite>
+            </div>
+            
+            <div class="bio-cta">
+                <h3>Want the complete story?</h3>
+                <p>Download the official press kit for the full biography, high-resolution photos, and exclusive content</p>
+                <a href="#" class="btn-primary">Download Press Kit</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <span class="logo-accent">The</span>Brand
+                    </div>
+                    <p class="footer-text">The complete digital infrastructure that powers storytelling, revenue, relationships, and reputation at once.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-spotify"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="bio.html">Bio</a></li>
+                        <li><a href="merch.html">Merch</a></li>
+                        <li><a href="community.html">Community</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Media Kit</a></li>
+                        <li><a href="#">Press Coverage</a></li>
+                        <li><a href="#">Booking</a></li>
+                        <li><a href="#">Fan Club</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 The Brand. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileToggle = document.getElementById('mobileToggle');
+        const navMenu = document.getElementById('navLinks');
+        
+        mobileToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

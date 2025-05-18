@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Brand - Community</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base Variables */
+        :root {
+            --primary-bg: #0A192F;
+            --secondary-bg: #112240;
+            --tertiary-bg: #1D2E4C;
+            --accent-teal: #00FFD4;
+            --accent-purple: #6A0DAD;
+            --accent-coral: #FF4757;
+            --text-primary: #E6F1FF;
+            --text-secondary: #8892B0;
+            --shadow-normal: 0 10px 30px -10px rgba(2, 12, 27, 0.7);
+            --shadow-hover: 0 20px 40px rgba(0, 255, 212, 0.2);
+            --transition-standard: all 0.3s ease;
+            --demo-red: #FF3333;
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: var(--primary-bg);
+            background-image: url('min2sqm4w7.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Add overlay to improve readability with background image */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 25, 47, 0.7);
+            z-index: -1;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button, .btn {
+            cursor: pointer;
+            border: none;
+            outline: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+        }
+
+        h3 {
+            font-size: 2rem;
+        }
+
+        h4 {
+            font-size: 1.5rem;
+        }
+
+        p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(to right, var(--accent-teal), var(--accent-purple));
+            color: var(--primary-bg);
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 30px;
+            display: inline-block;
+            transition: var(--transition-standard);
+            text-align: center;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent-teal);
+            border: 2px solid var(--accent-teal);
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 30px;
+            display: inline-block;
+            transition: var(--transition-standard);
+            text-align: center;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(0, 255, 212, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(10, 25, 47, 0.8);
+            backdrop-filter: blur(10px);
+            transition: var(--transition-standard);
+            padding: 20px 0;
+        }
+
+        header.scrolled {
+            padding: 15px 0;
+            background-color: rgba(10, 25, 47, 0.95);
+            box-shadow: var(--shadow-normal);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 900;
+            font-size: 1.8rem;
+            position: relative;
+        }
+
+        .logo-accent {
+            background: linear-gradient(to right, var(--accent-teal), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            transition: var(--transition-standard);
+            font-weight: 500;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-teal);
+        }
+
+        .nav-links a:after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-teal);
+            transition: var(--transition-standard);
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .nav-links .active a {
+            color: var(--accent-teal);
+        }
+
+        .nav-links .active a:after {
+            width: 100%;
+        }
+
+        .admin-link {
+            margin-left: 20px;
+        }
+
+        /* Mobile Menu */
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Demo Banner */
+        .demo-banner {
+            position: fixed;
+            top: 120px;
+            right: 20px;
+            width: 250px;
+            background-color: var(--demo-red);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-weight: 700;
+            font-size: 14px;
+            z-index: 900;
+            box-shadow: 0 5px 15px rgba(255, 51, 51, 0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            border-radius: 10px;
+            transform: rotate(5deg);
+        }
+        
+        .demo-banner-button {
+            background-color: white;
+            color: var(--demo-red);
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition-standard);
+        }
+        
+        .demo-banner-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Community Page Styles */
+        .community {
+            padding: 100px 0;
+            margin-top: 40px;
+        }
+
+        .community-section {
+            margin-bottom: 80px;
+            background-color: var(--secondary-bg);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: var(--shadow-normal);
+        }
+
+        .community-title {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .community-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        /* Message Board Styles */
+        .message-board {
+            background-color: var(--tertiary-bg);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .board-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .board-tabs {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .board-tab {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition-standard);
+            font-weight: 500;
+        }
+        
+        .board-tab.active {
+            background-color: rgba(0, 255, 212, 0.1);
+            color: var(--accent-teal);
+        }
+        
+        .board-filters {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .board-filter {
+            max-width: 150px;
+            padding: 8px 12px;
+            font-size: 0.85rem;
+        }
+        
+        .post-composer {
+            display: flex;
+            gap: 15px;
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .composer-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(to right, var(--accent-teal), var(--accent-purple));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-bg);
+            font-weight: 600;
+        }
+        
+        .composer-input {
+            flex: 1;
+        }
+        
+        .composer-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .composer-button {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-standard);
+        }
+        
+        .composer-button:hover {
+            background-color: rgba(0, 255, 212, 0.1);
+            color: var(--accent-teal);
+        }
+        
+        .post-button {
+            margin-left: auto;
+            padding: 8px 20px;
+        }
+        
+        .board-posts {
+            padding: 0 20px;
+        }
+        
+        .post-item {
+            display: flex;
+            gap: 15px;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .post-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: var(--accent-purple);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .post-content {
+            flex: 1;
+        }
+        
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .post-author {
+            font-weight: 600;
+        }
+        
+        .post-time {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+        
+        .post-text {
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .post-image {
+            margin-bottom: 15px;
+            border-radius: 10px;
+            overflow: hidden;
+            max-width: 400px;
+        }
+        
+        .post-image img {
+            width: 100%;
+            height: auto;
+        }
+        
+        .post-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .post-action {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition-standard);
+            font-size: 0.9rem;
+            padding: 5px 0;
+        }
+        
+        .post-action:hover {
+            color: var(--accent-teal);
+        }
+        
+        .board-pagination {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            padding: 20px 0;
+        }
+        
+        .pagination-item {
+            width: 32px;
+            height: 32px;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: none;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-standard);
+        }
+        
+        .pagination-item.active, .pagination-item:hover {
+            background-color: rgba(0, 255, 212, 0.1);
+            color: var(--accent-teal);
+        }
+        
+        .pagination-ellipsis {
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+        }
+
+        /* Direct Messaging Styles */
+        .direct-messaging {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            background-color: var(--tertiary-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            height: 600px;
+        }
+        
+        .messaging-sidebar {
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .messaging-search {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .messaging-tabs {
+            display: flex;
+            padding: 0 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .messaging-tab {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: var(--transition-standard);
+            position: relative;
+        }
+        
+        .messaging-tab:after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-teal);
+            transition: var(--transition-standard);
+        }
+        
+        .messaging-tab.active {
+            color: var(--accent-teal);
+        }
+        
+        .messaging-tab.active:after {
+            width: 100%;
+        }
+        
+        .conversation-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+        
+        .conversation-item {
+            display: flex;
+            padding: 15px;
+            gap: 10px;
+            cursor: pointer;
+            transition: var(--transition-standard);
+            position: relative;
+            align-items: center;
+        }
+        
+        .conversation-item:hover, .conversation-item.active {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .conversation-item.active {
+            border-left: 2px solid var(--accent-teal);
+            padding-left: 13px;
+        }
+        
+        .conversation-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: var(--accent-purple);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        
+        .conversation-preview {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .conversation-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .conversation-message {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .conversation-time {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            margin-left: auto;
+        }
+        
+        .unread-badge {
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            background-color: var(--accent-teal);
+            color: var(--primary-bg);
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .messaging-main {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .conversation-header {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            align-items: center;
+        }
+        
+        .conversation-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .conversation-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .conversation-action {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition-standard);
+            font-size: 0.9rem;
+        }
+        
+        .conversation-action:hover {
+            color: var(--accent-teal);
+        }
+        
+        .message-container {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .message-item {
+            display: flex;
+            max-width: 80%;
+        }
+        
+        .message-item.fan {
+            align-self: flex-start;
+        }
+        
+        .message-item.artist {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+        
+        .message-content {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 10px 15px;
+            border-radius: 10px;
+            position: relative;
+        }
+        
+        .message-item.fan .message-content {
+            border-top-left-radius: 0;
+            background-color: rgba(106, 13, 173, 0.2);
+        }
+        
+        .message-item.artist .message-content {
+            border-top-right-radius: 0;
+            background-color: rgba(0, 255, 212, 0.1);
+        }
+        
+        .message-time {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            margin-top: 5px;
+            text-align: right;
+        }
+        
+        .message-composer {
+            padding: 15px;
+            display: flex;
+            gap: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .send-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Marketing Tools Styles */
+        .marketing-tools {
+            background-color: var(--tertiary-bg);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .marketing-tabs {
+            display: flex;
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 0 20px;
+        }
+        
+        .marketing-tab {
+            padding: 15px 20px;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            position: relative;
+            transition: var(--transition-standard);
+            font-weight: 500;
+        }
+        
+        .marketing-tab:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-teal);
+            transition: var(--transition-standard);
+        }
+        
+        .marketing-tab.active {
+            color: var(--accent-teal);
+        }
+        
+        .marketing-tab.active:after {
+            width: 100%;
+        }
+        
+        .marketing-content {
+            padding: 30px;
+            display: none;
+        }
+        
+        .marketing-content.active {
+            display: block;
+        }
+        
+        .email-stats, .push-sms-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .email-stat, .push-stat {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            background: linear-gradient(to right, var(--accent-teal), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .form-hint {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+        
+        .radio-group {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .radio-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            gap: 5px;
+        }
+        
+        .template-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        .template-button {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition-standard);
+        }
+        
+        .template-button.active, .template-button:hover {
+            background-color: rgba(0, 255, 212, 0.1);
+            color: var(--accent-teal);
+        }
+        
+        .notification-preview {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .preview-timestamp {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Video Conferencing Styles */
+        .integration-cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .integration-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: var(--transition-standard);
+        }
+        
+        .integration-card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(0, 255, 212, 0.05);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .integration-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--accent-teal);
+        }
+        
+        .integration-title {
+            margin-bottom: 5px;
+        }
+        
+        .integration-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .events-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .event-cards {
+            display: grid;
+            grid-gap: 20px;
+        }
+        
+        .event-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+        }
+        
+        .event-icon {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(0, 255, 212, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--accent-teal);
+            flex-shrink: 0;
+        }
+        
+        .event-details {
+            flex: 1;
+        }
+        
+        .event-title {
+            margin-bottom: 5px;
+        }
+        
+        .event-datetime {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .event-description {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .event-meta {
+            display: flex;
+            gap: 15px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .event-manage {
+            background: none;
+            border: none;
+            color: var(--accent-teal);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: var(--transition-standard);
+            align-self: flex-start;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .event-manage:hover {
+            text-decoration: underline;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            margin-top: 50px;
+            background: linear-gradient(to bottom right, rgba(0, 255, 212, 0.1), rgba(106, 13, 173, 0.1));
+            padding: 40px;
+            border-radius: 15px;
+        }
+        
+        .cta-title {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, var(--accent-teal), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
+        }
+        
+        .cta-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary-bg);
+            padding: 60px 0 30px;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+
+        .footer-text {
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .footer-column h4 {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .footer-column h4::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 30px;
+            height: 2px;
+            background: linear-gradient(to right, var(--accent-teal), var(--accent-purple));
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            transition: var(--transition-standard);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-teal);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+            }
+            .email-stats, 
+            .push-sms-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .integration-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .direct-messaging,
+            .featured-video {
+                grid-template-columns: 1fr;
+            }
+            .mobile-toggle {
+                display: block;
+            }
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                right: -100%;
+                width: 80%;
+                background-color: var(--secondary-bg);
+                flex-direction: column;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: var(--shadow-normal);
+                transition: var(--transition-standard);
+            }
+            .nav-links.active {
+                right: 20px;
+            }
+            .messaging-sidebar {
+                display: none;
+            }
+            .messaging-main {
+                grid-column: span 2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .btn-primary,
+            .btn-secondary {
+                width: 100%;
+            }
+            .features-grid,
+            .email-stats, 
+            .push-sms-stats,
+            .integration-cards {
+                grid-template-columns: 1fr;
+            }
+            .board-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .event-card {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .event-meta {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Demo Banner -->
+    <div class="demo-banner">
+        <span>DEMO TEMPLATE</span>
+        <span>Premium artist platform with full monetization tools</span>
+        <button class="demo-banner-button">PURCHASE NOW</button>
+    </div>
+    
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <span class="logo-accent">The</span>Brand
+                </a>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="bio.html">Bio</a></li>
+                    <li><a href="merch.html">Merch</a></li>
+                    <li class="active"><a href="community.html">Community</a></li>
+                    <li><a href="admin.html" id="adminLoginButton" class="admin-link">Admin</a></li>
+                </ul>
+                <button class="mobile-toggle" id="mobileToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- COMMUNITY PAGE -->
+    <section class="community">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Fan Community Hub</h2>
+                <p class="section-subtitle">Build deeper relationships with your audience through messaging boards, direct communication, and powerful engagement tools</p>
+            </div>
+            
+            <!-- Fan Messaging Board -->
+            <div class="community-section">
+                <h3 class="community-title">Fan Messaging Board</h3>
+                <p class="community-subtitle">A dedicated space for your community to connect, share, and engage with you and each other</p>
+                
+                <div class="message-board">
+                    <div class="board-header">
+                        <div class="board-tabs">
+                            <button class="board-tab active">Community Discussions</button>
+                        </div>
+                        <div class="board-filters">
+                            <select class="form-input board-filter">
+                                <option>All Topics</option>
+                                <option>Music</option>
+                                <option>Events</option>
+                                <option>Merch</option>
+                                <option>General</option>
+                            </select>
+                            <select class="form-input board-filter">
+                                <option>Newest First</option>
+                                <option>Oldest First</option>
+                                <option>Most Liked</option>
+                                <option>Most Comments</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="post-composer">
+                        <div class="composer-avatar">A</div>
+                        <div class="composer-input">
+                            <input type="text" class="form-input" placeholder="Share your thoughts with the community...">
+                            <div class="composer-actions">
+                                <button class="composer-button"><i class="fas fa-image"></i></button>
+                                <button class="composer-button"><i class="fas fa-film"></i></button>
+                                <button class="composer-button"><i class="fas fa-link"></i></button>
+                                <button class="composer-button"><i class="fas fa-smile"></i></button>
+                                <button class="btn-primary post-button">Post</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="board-posts">
+                        <div class="post-item">
+                            <div class="post-avatar">J</div>
+                            <div class="post-content">
+                                <div class="post-header">
+                                    <div class="post-author">Jane Fan</div>
+                                    <div class="post-time">2 hours ago</div>
+                                </div>
+                                <div class="post-text">
+                                    The new album is absolutely incredible! That bridge in track 4 gives me chills every single time. Anyone else feel the same way?
+                                </div>
+                                <div class="post-actions">
+                                    <button class="post-action"><i class="fas fa-heart"></i> 24 Likes</button>
+                                    <button class="post-action"><i class="fas fa-comment"></i> 8 Replies</button>
+                                    <button class="post-action"><i class="fas fa-reply"></i> Reply</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="post-item">
+                            <div class="post-avatar">M</div>
+                            <div class="post-content">
+                                <div class="post-header">
+                                    <div class="post-author">Mike Music</div>
+                                    <div class="post-time">Yesterday</div>
+                                </div>
+                                <div class="post-text">
+                                    Just got my limited edition vinyl in the mail today and the packaging is next level! Check out the holographic effect on the cover:
+                                </div>
+                                <div class="post-image">
+                                    <img src="https://images.unsplash.com/photo-1603048588665-791ca8aea617?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3" alt="Vinyl Package">
+                                </div>
+                                <div class="post-actions">
+                                    <button class="post-action"><i class="fas fa-heart"></i> 47 Likes</button>
+                                    <button class="post-action"><i class="fas fa-comment"></i> 15 Replies</button>
+                                    <button class="post-action"><i class="fas fa-reply"></i> Reply</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="post-item">
+                            <div class="post-avatar">S</div>
+                            <div class="post-content">
+                                <div class="post-header">
+                                    <div class="post-author">SuperFan1992</div>
+                                    <div class="post-time">3 days ago</div>
+                                </div>
+                                <div class="post-text">
+                                    Question for everyone - who's going to the Austin show next month? Thinking about organizing a pre-show meetup for fans. Drop a comment if you're interested!
+                                </div>
+                                <div class="post-actions">
+                                    <button class="post-action"><i class="fas fa-heart"></i> 32 Likes</button>
+                                    <button class="post-action"><i class="fas fa-comment"></i> 28 Replies</button>
+                                    <button class="post-action"><i class="fas fa-reply"></i> Reply</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="board-pagination">
+                        <button class="pagination-item active">1</button>
+                        <button class="pagination-item">2</button>
+                        <button class="pagination-item">3</button>
+                        <button class="pagination-item">4</button>
+                        <span class="pagination-ellipsis">...</span>
+                        <button class="pagination-item">12</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Direct Fan Communication -->
+            <div class="community-section">
+                <h3 class="community-title">Direct Fan Communication</h3>
+                <p class="community-subtitle">Personalized messaging to connect directly with your most dedicated fans</p>
+                
+                <div class="direct-messaging">
+                    <div class="messaging-sidebar">
+                        <div class="messaging-search">
+                            <input type="text" class="form-input" placeholder="Search conversations...">
+                        </div>
+                        <div class="messaging-tabs">
+                            <button class="messaging-tab active">All</button>
+                            <button class="messaging-tab">Unread</button>
+                            <button class="messaging-tab">VIP</button>
+                        </div>
+                        <div class="conversation-list">
+                            <div class="conversation-item active">
+                                <div class="conversation-avatar">T</div>
+                                <div class="conversation-preview">
+                                    <div class="conversation-name">TrueFan123</div>
+                                    <div class="conversation-message">Thanks for responding! I'm so excited for the...</div>
+                                </div>
+                                <div class="conversation-time">12:34</div>
+                            </div>
+                            <div class="conversation-item unread">
+                                <div class="conversation-avatar">L</div>
+                                <div class="conversation-preview">
+                                    <div class="conversation-name">LyricsLover</div>
+                                    <div class="conversation-message">What was the inspiration behind the second verse in...</div>
+                                </div>
+                                <div class="conversation-time">Fri</div>
+                                <div class="unread-badge">3</div>
+                            </div>
+                            <div class="conversation-item unread">
+                                <div class="conversation-avatar">M</div>
+                                <div class="conversation-preview">
+                                    <div class="conversation-name">MusicJournal</div>
+                                    <div class="conversation-message">We'd love to feature you in our upcoming article about...</div>
+                                </div>
+                                <div class="conversation-time">Wed</div>
+                                <div class="unread-badge">1</div>
+                            </div>
+                            <div class="conversation-item">
+                                <div class="conversation-avatar">V</div>
+                                <div class="conversation-preview">
+                                    <div class="conversation-name">VinylCollector</div>
+                                    <div class="conversation-message">Just received my signed vinyl, it looks amazing...</div>
+                                </div>
+                                <div class="conversation-time">Mon</div>
+                            </div>
+                            <div class="conversation-item">
+                                <div class="conversation-avatar">F</div>
+                                <div class="conversation-preview">
+                                    <div class="conversation-name">FestivalFan</div>
+                                    <div class="conversation-message">Your set at the summer festival was absolutely...</div>
+                                </div>
+                                <div class="conversation-time">Aug 5</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="messaging-main">
+                        <div class="conversation-header">
+                            <div class="conversation-info">
+                                <div class="conversation-title">TrueFan123</div>
+                            </div>
+                            <div class="conversation-actions">
+                                <button class="conversation-action"><i class="fas fa-search"></i></button>
+                                <button class="conversation-action"><i class="fas fa-phone"></i></button>
+                                <button class="conversation-action"><i class="fas fa-video"></i></button>
+                                <button class="conversation-action"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        
+                        <div class="message-container">
+                            <div class="message-item fan">
+                                <div class="message-content">
+                                    <p>Hi! I just wanted to say your latest album changed my life. The lyrics in "Moment of Truth" really spoke to me during a difficult time.</p>
+                                    <div class="message-time">11:42 AM</div>
+                                </div>
+                            </div>
+                            
+                            <div class="message-item artist">
+                                <div class="message-content">
+                                    <p>That means so much to me! I wrote that song during a pretty challenging period in my own life. Music has this amazing way of connecting us through shared experiences.</p>
+                                    <div class="message-time">11:45 AM</div>
+                                </div>
+                            </div>
+                            
+                            <div class="message-item fan">
+                                <div class="message-content">
+                                    <p>Absolutely! I'm also planning to come to your Chicago show next month. Any chance you'll be playing that song?</p>
+                                    <div class="message-time">11:52 AM</div>
+                                </div>
+                            </div>
+                            
+                            <div class="message-item artist">
+                                <div class="message-content">
+                                    <p>Chicago is going to be amazing! And yes, that song is definitely on the setlist. It's actually going to be part of a special acoustic segment in the middle of the show.</p>
+                                    <div class="message-time">12:01 PM</div>
+                                </div>
+                            </div>
+                            
+                            <div class="message-item fan">
+                                <div class="message-content">
+                                    <p>Thanks for responding! I'm so excited for the show. It'll be my first time seeing you live.</p>
+                                    <div class="message-time">12:34 PM</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="message-composer">
+                            <input type="text" class="form-input" placeholder="Type your message...">
+                            <button class="btn-primary send-button"><i class="fas fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Marketing Tools -->
+            <div class="community-section">
+                <h3 class="community-title">Advanced Marketing Tools</h3>
+                <p class="community-subtitle">Reach your audience across multiple channels with powerful, automated marketing tools</p>
+                
+                <div class="marketing-tools">
+                    <div class="marketing-tabs">
+                        <button class="marketing-tab active">Email Marketing</button>
+                        <button class="marketing-tab">Push & SMS</button>
+                        <button class="marketing-tab">Video Conferencing</button>
+                    </div>
+                    
+                    <div class="marketing-content active" id="email-marketing">
+                        <div class="email-dashboard">
+                            <div class="email-stats">
+                                <div class="email-stat">
+                                    <div class="stat-value">12,458</div>
+                                    <div class="stat-label">Total Subscribers</div>
+                                </div>
+                                <div class="email-stat">
+                                    <div class="stat-value">42%</div>
+                                    <div class="stat-label">Average Open Rate</div>
+                                </div>
+                                <div class="email-stat">
+                                    <div class="stat-value">8.7%</div>
+                                    <div class="stat-label">Click-through Rate</div>
+                                </div>
+                                <div class="email-stat">
+                                    <div class="stat-value">$0.02</div>
+                                    <div class="stat-label">Cost Per Email</div>
+                                </div>
+                            </div>
+                            
+                            <div class="email-composer">
+                                <div class="form-group">
+                                    <label class="form-label">Campaign Name</label>
+                                    <input type="text" class="form-input" placeholder="e.g., New Album Announcement">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Select Audience</label>
+                                    <select class="form-input">
+                                        <option>All Subscribers</option>
+                                        <option>VIP Members</option>
+                                        <option>Recent Purchasers</option>
+                                        <option>Concert Attendees</option>
+                                        <option>New Subscribers</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Email Subject</label>
+                                    <input type="text" class="form-input" placeholder="Enter subject line">
+                                    <div class="form-hint">Subject lines under 50 characters have higher open rates</div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Delivery Schedule</label>
+                                    <div class="radio-group">
+                                        <label class="radio-label">
+                                            <input type="radio" name="schedule" checked> Send Now
+                                        </label>
+                                        <label class="radio-label">
+                                            <input type="radio" name="schedule"> Schedule
+                                        </label>
+                                        <label class="radio-label">
+                                            <input type="radio" name="schedule"> Optimize Time
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <button class="btn-primary">Create Campaign</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="marketing-content" id="push-sms">
+                        <div class="push-sms-dashboard">
+                            <div class="push-sms-stats">
+                                <div class="push-stat">
+                                    <div class="stat-value">9,872</div>
+                                    <div class="stat-label">Push Subscribers</div>
+                                </div>
+                                <div class="push-stat">
+                                    <div class="stat-value">7,234</div>
+                                    <div class="stat-label">SMS Subscribers</div>
+                                </div>
+                                <div class="push-stat">
+                                    <div class="stat-value">94%</div>
+                                    <div class="stat-label">Delivery Rate</div>
+                                </div>
+                                <div class="push-stat">
+                                    <div class="stat-value">3.5x</div>
+                                    <div class="stat-label">Higher CTR vs. Email</div>
+                                </div>
+                            </div>
+                            
+                            <div class="notification-composer">
+                                <div class="form-group">
+                                    <label class="form-label">Notification Type</label>
+                                    <select class="form-input">
+                                        <option>Push Notification</option>
+                                        <option>SMS Message</option>
+                                        <option>Both</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Message Templates</label>
+                                    <div class="template-buttons">
+                                        <button class="template-button active">New Content Alert</button>
+                                        <button class="template-button">Merch Drop</button>
+                                        <button class="template-button">Ticket Sale</button>
+                                        <button class="template-button">Live Stream</button>
+                                        <button class="template-button">Custom Message</button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Push Title & Message</label>
+                                    <input type="text" class="form-input" placeholder="Title (max 40 chars)">
+                                    <textarea class="form-input" placeholder="Message (max 120 chars)">🔔 New Album Out Now!
+Listen to "Momentum" on all platforms. Limited signed vinyl available in the store.</textarea>
+                                </div>
+                                <div class="notification-preview">
+                                    <div class="preview-timestamp">Just now</div>
+                                </div>
+                                <button class="btn-primary">Send Notification</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="marketing-content" id="video-conferencing">
+                        <div class="video-dashboard">
+                            <div class="integration-cards">
+                                <div class="integration-card">
+                                    <div class="integration-icon"><i class="fas fa-video"></i></div>
+                                    <h4 class="integration-title">Zoom Integration</h4>
+                                    <p class="integration-description">Host up to 1,000 participants</p>
+                                </div>
+                                <div class="integration-card">
+                                    <div class="integration-icon"><i class="fab fa-microsoft"></i></div>
+                                    <h4 class="integration-title">Microsoft Teams</h4>
+                                    <p class="integration-description">Perfect for collaborative sessions</p>
+                                </div>
+                                <div class="integration-card">
+                                    <div class="integration-icon"><i class="fab fa-instagram"></i></div>
+                                    <h4 class="integration-title">Instagram Live</h4>
+                                    <p class="integration-description">Connect with your Instagram followers</p>
+                                </div>
+                                <div class="integration-card">
+                                    <div class="integration-icon"><i class="fab fa-youtube"></i></div>
+                                    <h4 class="integration-title">YouTube Live</h4>
+                                    <p class="integration-description">Stream to your YouTube subscribers</p>
+                                </div>
+                            </div>
+                            
+                            <div class="events-section">
+                                <div class="events-header">
+                                    <h4>Upcoming Fan Events</h4>
+                                    <button class="btn-secondary">Schedule New Event</button>
+                                </div>
+                                <div class="event-cards">
+                                    <div class="event-card">
+                                        <div class="event-icon"><i class="fas fa-microphone"></i></div>
+                                        <div class="event-details">
+                                            <h4 class="event-title">VIP Album Listening Party</h4>
+                                            <div class="event-datetime">Aug 15, 2023 • 7:00 PM EST</div>
+                                            <p class="event-description">Exclusive pre-release listening session for the new album with live Q&A. Limited to 50 VIP members.</p>
+                                            <div class="event-meta">
+                                                <div class="event-attendance"><i class="fas fa-users"></i> 43/50 Registered</div>
+                                                <div class="event-platform"><i class="fas fa-video"></i> Zoom</div>
+                                            </div>
+                                        </div>
+                                        <button class="event-manage"><i class="fas fa-cog"></i> Manage</button>
+                                    </div>
+                                    <div class="event-card">
+                                        <div class="event-icon"><i class="fas fa-guitar"></i></div>
+                                        <div class="event-details">
+                                            <h4 class="event-title">Acoustic Performance & Chat</h4>
+                                            <div class="event-datetime">Aug 22, 2023 • 8:00 PM EST</div>
+                                            <p class="event-description">Intimate acoustic session featuring songs from the new album plus fan favorites. Open to all subscribers.</p>
+                                            <div class="event-meta">
+                                                <div class="event-attendance"><i class="fas fa-users"></i> 182 Registered</div>
+                                                <div class="event-platform"><i class="fab fa-youtube"></i> YouTube Live</div>
+                                            </div>
+                                        </div>
+                                        <button class="event-manage"><i class="fas fa-cog"></i> Manage</button>
+                                    </div>
+                                    <div class="event-card">
+                                        <div class="event-icon"><i class="fas fa-palette"></i></div>
+                                        <div class="event-details">
+                                            <h4 class="event-title">Fan Art Showcase</h4>
+                                            <div class="event-datetime">Sept 5, 2023 • 6:00 PM EST</div>
+                                            <p class="event-description">Live review and celebration of fan artwork inspired by the new album. Submit your work by August 30th to be featured.</p>
+                                            <div class="event-meta">
+                                                <div class="event-attendance"><i class="fas fa-users"></i> 97 Registered</div>
+                                                <div class="event-platform"><i class="fab fa-instagram"></i> Instagram Live</div>
+                                            </div>
+                                        </div>
+                                        <button class="event-manage"><i class="fas fa-cog"></i> Manage</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer CTA -->
+            <div class="cta-section">
+                <h3 class="cta-title">MOMENTUM</h3>
+                <p class="cta-subtitle">A multi-page digital HQ you control end-to-end, with all NFT, merch, and membership revenue flowing directly to you.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-soundcloud"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <span class="logo-accent">The</span>Brand
+                    </div>
+                    <p class="footer-text">The complete digital infrastructure that powers storytelling, revenue, relationships, and reputation at once.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-spotify"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="bio.html">Bio</a></li>
+                        <li><a href="merch.html">Merch</a></li>
+                        <li><a href="community.html">Community</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Media Kit</a></li>
+                        <li><a href="#">Press Coverage</a></li>
+                        <li><a href="#">Booking</a></li>
+                        <li><a href="#">Fan Club</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 The Brand. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileToggle = document.getElementById('mobileToggle');
+        const navMenu = document.getElementById('navLinks');
+        
+        mobileToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+        });
+        
+        // Marketing tabs functionality
+        const marketingTabs = document.querySelectorAll('.marketing-tab');
+        const marketingContents = document.querySelectorAll('.marketing-content');
+        
+        marketingTabs.forEach((tab, index) => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                marketingTabs.forEach(t => t.classList.remove('active'));
+                marketingContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                marketingContents[index].classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
